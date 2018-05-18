@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
-  * @file    usb_bsp.h
+  * @file    usbd_req.h
   * @author  MCD Application Team
-  * @version V2.2.0
-  * @date    09-November-2015
-  * @brief   Specific api's relative to the used hardware platform
+  * @version V2.4.2
+  * @date    11-December-2015
+  * @brief   Header file for the usbd_req.c file
   ******************************************************************************
   * @attention
   *
@@ -23,34 +23,30 @@
   * limitations under the License.
   *
   ******************************************************************************
-  */
+  */ 
 
 /* Define to prevent recursive inclusion -------------------------------------*/
-#ifndef __USB_BSP__H__
-#define __USB_BSP__H__
+#ifndef __USB_REQUEST_H
+#define __USB_REQUEST_H
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
 
 /* Includes ------------------------------------------------------------------*/
-#include "usb_core.h"
+#include  "usb/usbd_def.h"
 
-/** @addtogroup USB_OTG_DRIVER
+
+/** @addtogroup STM32_USB_DEVICE_LIBRARY
   * @{
   */
   
-/** @defgroup USB_BSP
-  * @brief This file is the 
+/** @defgroup USBD_REQ
+  * @brief header file for the usbd_req.c file
   * @{
   */ 
 
-
-/** @defgroup USB_BSP_Exported_Defines
-  * @{
-  */ 
-/**
-  * @}
-  */ 
-
-
-/** @defgroup USB_BSP_Exported_Types
+/** @defgroup USBD_REQ_Exported_Defines
   * @{
   */ 
 /**
@@ -58,49 +54,60 @@
   */ 
 
 
-/** @defgroup USB_BSP_Exported_Macros
+/** @defgroup USBD_REQ_Exported_Types
+  * @{
+  */
+/**
+  * @}
+  */ 
+
+
+
+/** @defgroup USBD_REQ_Exported_Macros
   * @{
   */ 
 /**
   * @}
   */ 
 
-/** @defgroup USB_BSP_Exported_Variables
+/** @defgroup USBD_REQ_Exported_Variables
   * @{
   */ 
 /**
   * @}
   */ 
 
-/** @defgroup USB_BSP_Exported_FunctionsPrototype
+/** @defgroup USBD_REQ_Exported_FunctionsPrototype
   * @{
   */ 
-void BSP_Init(void);
 
-void USB_OTG_BSP_Init (USB_OTG_CORE_HANDLE *pdev);
-void USB_OTG_BSP_uDelay (const uint32_t usec);
-void USB_OTG_BSP_mDelay (const uint32_t msec);
-void USB_OTG_BSP_EnableInterrupt (USB_OTG_CORE_HANDLE *pdev);
-void USB_OTG_BSP_TimerIRQ (void);
-#ifdef USE_HOST_MODE
-void USB_OTG_BSP_ConfigVBUS(USB_OTG_CORE_HANDLE *pdev);
-void USB_OTG_BSP_DriveVBUS(USB_OTG_CORE_HANDLE *pdev,uint8_t state);
-void USB_OTG_BSP_Resume(USB_OTG_CORE_HANDLE *pdev) ;                                                                
-void USB_OTG_BSP_Suspend(USB_OTG_CORE_HANDLE *pdev);
+USBD_StatusTypeDef  USBD_StdDevReq (USBD_HandleTypeDef  *pdev, USBD_SetupReqTypedef  *req);
+USBD_StatusTypeDef  USBD_StdItfReq (USBD_HandleTypeDef  *pdev, USBD_SetupReqTypedef  *req);
+USBD_StatusTypeDef  USBD_StdEPReq  (USBD_HandleTypeDef  *pdev, USBD_SetupReqTypedef  *req);
 
-#endif /* USE_HOST_MODE */
+
+void USBD_CtlError  (USBD_HandleTypeDef  *pdev, USBD_SetupReqTypedef *req);
+
+void USBD_ParseSetupRequest (USBD_SetupReqTypedef *req, uint8_t *pdata);
+
+void USBD_GetString         (uint8_t *desc, uint8_t *unicode, uint16_t *len);
 /**
   * @}
   */ 
 
-#endif /* __USB_BSP__H__ */
+#ifdef __cplusplus
+}
+#endif
+
+#endif /* __USB_REQUEST_H */
 
 /**
   * @}
   */ 
 
 /**
-  * @}
-  */ 
+* @}
+*/ 
+
+
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-
